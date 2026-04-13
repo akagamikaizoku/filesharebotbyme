@@ -35,69 +35,155 @@ I Guess This Will Be Usefull For Many People.....😇.
 
 
 ### Features
-- Fully customisable.
-- Customisable welcome & Forcesub messages.
-- More than one Posts in One Link.
-- Can be deployed on heroku directly.
+- Fully customizable bot with configurable messages
+- Customizable welcome & force-subscription messages
+- Batch file sharing (multiple files in one link)
+- Single file sharing with unique links
+- File deletion capability
+- Broadcast messages to all users
+- Admin dashboard with statistics
+- Admin commands for file management
+- MongoDB database integration
+- Lightweight and easy to deploy
 
-### Setup
+### Setup Requirements
 
-- Add the bot to Database Channel with all permission
-- Add bot to ForceSub channel as Admin with Invite Users via Link Permission if you enabled ForceSub 
+Before deploying, you need:
+- A Telegram Bot Token from [@BotFather](https://t.me/BotFather)
+- Your API ID and API Hash from [my.telegram.org](https://my.telegram.org)
+- A private Telegram channel for storing files
+- MongoDB database (free tier available at [mongodb.com](https://www.mongodb.com/))
+- Admin permissions in the file storage channel
+
+### Pre-Deployment Checklist
+
+1. Create a new private Telegram channel for file storage
+2. Add your bot to the channel with ALL permissions
+3. Get your channel ID (forward any message and use `/getmyid` in another bot)
+4. Optionally, create a Force-Sub channel and add bot as admin with "Invite Users via Link" permission
+5. Create a MongoDB database at [mongodb.com](https://www.mongodb.com/) (free)
+6. Get your MongoDB connection string
 
 ##
 ### Installation
-#### Deploy on Heroku
-**BEFORE YOU DEPLOY ON HEROKU, YOU SHOULD FORK THE REPO AND CHANGE ITS NAME TO ANYTHING ELSE**<br>
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)</br>
-<a href="https://youtu.be/LCrkRTMkmzE">
-  <img src="https://img.shields.io/badge/How%20to-Deploy-red?logo=youtube" width="147">
-</a><br>
-**Check This Tutorial Video on YouTube for any Help**<br>
-**Thanks to [Erich](https://t.me/ErichDaniken) and his [InFoTel](https://t.me/InFoTel_Group) for this Video**
+
+#### Quick Deploy on Koyeb (Recommended)
+
+The fastest way to deploy:
+
+1. Fork this repository to your GitHub account
+2. Go to [Koyeb Console](https://app.koyeb.com)
+3. Click "**Deploy to Koyeb**" button below (you'll need to authenticate with GitHub)
+4. Fill in the environment variables (see Variables section)
+5. Deploy!
+
+[![Deploy to Koyeb](https://www.koyeb.com/static/images/deploy/button.svg)](https://app.koyeb.com/deploy?type=git&repository=github.com/CodeXBotz/File-Sharing-Bot&branch=main&name=file-sharing-bot)
+
+**Koyeb Setup Steps:**
+1. After clicking deploy, authenticate with your GitHub account
+2. Select your forked repository
+3. In "Environment Variables" section, add all variables from `.env.example`
+4. Click "Deploy Service"
+5. Wait for deployment to complete
 
 #### Deploy on Railway
 [![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template/1jKLr4)
 
-#### Deploy on Koyeb
+**Railway Setup:**
+1. Click the button above
+2. Connect your GitHub account
+3. Add all environment variables
+4. Deploy
 
-The fastest way to deploy the application is to click the **Deploy to Koyeb** button below.
+#### Deploy on Heroku (Legacy)
+**BEFORE YOU DEPLOY, FORK THE REPO AND CHANGE ITS NAME**<br>
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)</br>
 
-
-[![Deploy to Koyeb](https://www.koyeb.com/static/images/deploy/button.svg)](https://app.koyeb.com/deploy?type=git&repository=github.com/CodeXBotz/File-Sharing-Bot&branch=koyeb&name=filesharingbot)
-
-
-#### Deploy in your VPS
+#### Deploy on Your VPS/Server
 ````bash
-git clone https://github.com/CodeXBotz/File-Sharing-Bot
+# Clone the repository
+git clone https://github.com/yourusername/File-Sharing-Bot
 cd File-Sharing-Bot
+
+# Install dependencies
 pip3 install -r requirements.txt
-# <Create config.py appropriately>
+
+# Create environment file
+cp .env.example .env
+# Edit .env with your configuration
+nano .env
+
+# Run the bot
 python3 main.py
 ````
 
-### Admin Commands
+### Commands
 
-```
-/start - start the bot or get posts
+**User Commands:**
+- `/start` - Start the bot or access files via link
+- `/help` - View all available commands
+- `/cancel` - Cancel ongoing operations
 
-/batch - create link for more than one posts
+**Admin Commands:**
+- `/admin` - View admin dashboard with statistics
+- `/genlink` - Generate a link for a single file (forward a file and use this command)
+- `/batch` - Create a link for multiple files (batch processing)
+- `/users` - View total number of bot users
+- `/broadcast` - Send a message to all users (reply to message + command)
+- `/delete` - Delete a file from database (reply with forwarded message)
+- `/stats` - Check bot uptime
 
-/genlink - create link for one post
+**How to Add Files:**
+1. Simply send any file/document to the bot (as an admin)
+2. Bot will upload it to your private channel
+3. Bot will generate a shareable link automatically
+4. Share the link with whoever needs the file
 
-/users - view bot statistics
+### Environment Variables
 
-/broadcast - broadcast any messages to bot users
+Create a `.env` file or set these environment variables. See `.env.example` for template:
 
-/stats - checking your bot uptime
-```
+**Required:**
+* `TG_BOT_TOKEN` - Bot token from @BotFather
+* `APP_ID` - API ID from my.telegram.org
+* `API_HASH` - API Hash from my.telegram.org
+* `CHANNEL_ID` - Your private file storage channel ID
+* `OWNER_ID` - Your Telegram user ID
+* `DATABASE_URL` - MongoDB connection string
+* `ADMINS` - Space-separated list of admin user IDs
 
-### Variables
+**Optional:**
+* `FORCE_SUB_CHANNEL` - Channel ID for force subscription (0 to disable)
+* `DATABASE_NAME` - MongoDB database name (default: filesharexbot)
+* `START_MESSAGE` - Custom welcome message
+* `FORCE_SUB_MESSAGE` - Custom force subscription message
+* `CUSTOM_CAPTION` - Custom caption for files
+* `PROTECT_CONTENT` - Set True to prevent file forwarding
+* `DISABLE_CHANNEL_BUTTON` - Set True to disable channel share button
+* `TG_BOT_WORKERS` - Number of bot workers (default: 4)
+* `PORT` - Port number (default: 8080)
 
-* `API_HASH` Your API Hash from my.telegram.org
-* `APP_ID` Your API ID from my.telegram.org
-* `TG_BOT_TOKEN` Your bot token from @BotFather
-* `OWNER_ID` Must enter Your Telegram Id
+### Troubleshooting
+
+**Bot not responding:**
+- Check if bot token is correct
+- Verify API ID and API Hash
+- Make sure bot is added to the channel
+
+**Database connection error:**
+- Check MongoDB connection string
+- Verify database credentials
+- Ensure IP whitelist includes your server IP
+
+**Force subscription not working:**
+- Add bot to the force sub channel as admin
+- Give bot "Invite Users via Link" permission
+- Verify channel ID is correct
+
+**File not uploading:**
+- Check if bot has permissions in storage channel
+- Verify channel ID is correct
+- Ensure file size is within Telegram limits
 * `CHANNEL_ID` Your Channel ID eg:- -100xxxxxxxx
 * `DATABASE_URL` Your mongo db url
 * `DATABASE_NAME` Your mongo db session name

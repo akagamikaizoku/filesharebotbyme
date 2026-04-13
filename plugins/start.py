@@ -9,10 +9,11 @@ from pyrogram import Client, filters, __version__
 from pyrogram.enums import ParseMode
 from pyrogram.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
 from pyrogram.errors import FloodWait, UserIsBlocked, InputUserDeactivated
+from datetime import datetime
 
 from bot import Bot
-from config import ADMINS, FORCE_MSG, START_MSG, CUSTOM_CAPTION, DISABLE_CHANNEL_BUTTON, PROTECT_CONTENT
-from helper_func import subscribed, encode, decode, get_messages
+from config import ADMINS, FORCE_MSG, START_MSG, CUSTOM_CAPTION, DISABLE_CHANNEL_BUTTON, PROTECT_CONTENT, HELP_MSG, ADMIN_MSG
+from helper_func import subscribed, encode, decode, get_messages, get_readable_time
 from database.database import add_user, del_user, full_userbase, present_user
 
 
@@ -88,8 +89,8 @@ async def start_command(client: Client, message: Message):
         reply_markup = InlineKeyboardMarkup(
             [
                 [
-                    InlineKeyboardButton("😊 About Me", callback_data = "about"),
-                    InlineKeyboardButton("🔒 Close", callback_data = "close")
+                    InlineKeyboardButton("Help", callback_data = "help"),
+                    InlineKeyboardButton("Close", callback_data = "close")
                 ]
             ]
         )
@@ -154,9 +155,55 @@ async def not_joined(client: Client, message: Message):
 
 @Bot.on_message(filters.command('users') & filters.private & filters.user(ADMINS))
 async def get_users(client: Bot, message: Message):
-    msg = await client.send_message(chat_id=message.chat.id, text=WAIT_MSG)
+    msg = await client.send_message(chat_id=message.chat.id, text="Processing...")
     users = await full_userbase()
-    await msg.edit(f"{len(users)} users are using this bot")
+    await msg.edit(f"Total users: {len(users)}")
+
+@Bot.on_message(filters.command('help') & filters.private)
+async def help_command(client: Client, message: Message):
+    await message.reply_text(
+        text = HELP_MSG,
+        disable_web_page_preview = True,
+        quote = True
+    )
+
+@Bot.on_message(filters.command('admin') & filters.private & filters.user(ADMINS))
+async def admin_dashboard(client: Bot, message: Message):
+    users = await full_userbase()
+    now = datetime.now()
+    delta = now - client.uptime
+    uptime = get_readable_time(delta.seconds)
+    
+    await message.reply_text(
+        text = ADMIN_MSG.format(users=len(users), uptime=uptime),
+        disable_web_page_preview = True,
+        quote = True
+    )
+
+@Bot.on_message(filters.command('cancel') & filters.private)
+async def cancel_command(client: Client, message: Message):
+    try:
+        await message.delete()
+    except:
+        pass
+    await message.reply_text("Operation cancelled.", quote=True)
+
+@Bot.on_message(filters.command('delete') & filters.private & filters.user(ADMINS))
+async def delete_message(client: Client, message: Message):
+    if not message.reply_to_message:
+        await message.reply_text("Reply to a forwarded message from the DB channel to delete it.", quote=True)
+        return
+    
+    try:
+        replied_msg = message.reply_to_message
+        if replied_msg.forward_from_chat and replied_msg.forward_from_chat.id == client.db_channel.id:
+            msg_id = replied_msg.forward_from_message_id
+            await client.delete_messages(chat_id=client.db_channel.id, message_ids=[msg_id])
+            await message.reply_text(f"Message {msg_id} deleted from database.", quote=True)
+        else:
+            await message.reply_text("This message is not from the DB channel.", quote=True)
+    except Exception as e:
+        await message.reply_text(f"Error deleting message: {str(e)}", quote=True)
 
 @Bot.on_message(filters.private & filters.command('broadcast') & filters.user(ADMINS))
 async def send_text(client: Bot, message: Message):

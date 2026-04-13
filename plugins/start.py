@@ -90,6 +90,9 @@ async def start_command(client: Client, message: Message):
             [
                 [
                     InlineKeyboardButton("Help", callback_data = "help"),
+                    InlineKeyboardButton("Menu", callback_data = "menu")
+                ],
+                [
                     InlineKeyboardButton("Close", callback_data = "close")
                 ]
             ]
@@ -155,9 +158,9 @@ async def not_joined(client: Client, message: Message):
 
 @Bot.on_message(filters.command('users') & filters.private & filters.user(ADMINS))
 async def get_users(client: Bot, message: Message):
-    msg = await client.send_message(chat_id=message.chat.id, text="Processing...")
+    msg = await client.send_message(chat_id=message.chat.id, text="<b>Fetching user count...</b>")
     users = await full_userbase()
-    await msg.edit(f"Total users: {len(users)}")
+    await msg.edit(f"<b>Total Users:</b> <code>{len(users)}</code>")
 
 @Bot.on_message(filters.command('help') & filters.private)
 async def help_command(client: Client, message: Message):
@@ -186,12 +189,12 @@ async def cancel_command(client: Client, message: Message):
         await message.delete()
     except:
         pass
-    await message.reply_text("Operation cancelled.", quote=True)
+    await message.reply_text("<b>Operation cancelled.</b>", quote=True)
 
 @Bot.on_message(filters.command('delete') & filters.private & filters.user(ADMINS))
 async def delete_message(client: Client, message: Message):
     if not message.reply_to_message:
-        await message.reply_text("Reply to a forwarded message from the DB channel to delete it.", quote=True)
+        await message.reply_text("<b>Usage:</b> Reply to a forwarded message from the DB channel to delete it.", quote=True)
         return
     
     try:
@@ -199,11 +202,11 @@ async def delete_message(client: Client, message: Message):
         if replied_msg.forward_from_chat and replied_msg.forward_from_chat.id == client.db_channel.id:
             msg_id = replied_msg.forward_from_message_id
             await client.delete_messages(chat_id=client.db_channel.id, message_ids=[msg_id])
-            await message.reply_text(f"Message {msg_id} deleted from database.", quote=True)
+            await message.reply_text(f"<b>Deleted</b>\nMessage ID: <code>{msg_id}</code> removed from database.", quote=True)
         else:
-            await message.reply_text("This message is not from the DB channel.", quote=True)
+            await message.reply_text("<b>Error</b>\nThis message is not from the DB channel.", quote=True)
     except Exception as e:
-        await message.reply_text(f"Error deleting message: {str(e)}", quote=True)
+        await message.reply_text(f"<b>Error:</b> <code>{str(e)}</code>", quote=True)
 
 @Bot.on_message(filters.private & filters.command('broadcast') & filters.user(ADMINS))
 async def send_text(client: Bot, message: Message):
@@ -216,7 +219,7 @@ async def send_text(client: Bot, message: Message):
         deleted = 0
         unsuccessful = 0
         
-        pls_wait = await message.reply("<i>Broadcasting Message.. This will Take Some Time</i>")
+        pls_wait = await message.reply("<b>Broadcasting message to all users...</b>\n\nThis will take some time.")
         for chat_id in query:
             try:
                 await broadcast_msg.copy(chat_id)
@@ -236,13 +239,18 @@ async def send_text(client: Bot, message: Message):
                 pass
             total += 1
         
-        status = f"""<b><u>Broadcast Completed</u>
+        status = f"""<b>Broadcast Completed</b>
 
-Total Users: <code>{total}</code>
-Successful: <code>{successful}</code>
-Blocked Users: <code>{blocked}</code>
-Deleted Accounts: <code>{deleted}</code>
-Unsuccessful: <code>{unsuccessful}</code></b>"""
+━━━━━━━━━━━━━━━━━━━━━━━━
+📊 <b>Statistics:</b>
+
+👥 Total Users: <code>{total}</code>
+✅ Successful: <code>{successful}</code>
+❌ Blocked Users: <code>{blocked}</code>
+🗑️ Deleted Accounts: <code>{deleted}</code>
+⚠️ Unsuccessful: <code>{unsuccessful}</code>
+
+━━━━━━━━━━━━━━━━━━━━━━━━"""
         
         return await pls_wait.edit(status)
 

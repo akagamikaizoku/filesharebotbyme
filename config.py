@@ -61,42 +61,52 @@ BOT_STATS_TEXT = "<b>BOT UPTIME</b>\n{uptime}"
 USER_REPLY_TEXT = "Don't send me messages directly. Use /help to see available commands."
 
 # Help message
-HELP_MSG = """<b>File Sharing Bot - Help</b>
+HELP_MSG = """<b>File Sharing Bot - Help Menu</b>
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <b>USER COMMANDS:</b>
-/start - Start the bot or access files via link
-/help - Show this message
+📌 /start - Start the bot or access files
+📌 /help - Show this help menu
+📌 /cancel - Cancel ongoing operations
 
 <b>ADMIN COMMANDS:</b>
-/admin - Admin dashboard
-/genlink - Generate link for a single file
-/batch - Generate link for multiple files
-/users - View total bot users
-/broadcast - Send message to all users
-/cancel - Stop ongoing operation
-/stats - Check bot uptime
-/delete - Delete a file from database
+🔗 /admin - View admin dashboard
+🔗 /genlink - Generate single file link
+🔗 /batch - Generate batch file links
+🔗 /users - View total users
+🔗 /broadcast - Send message to all users
+🔗 /delete - Remove file from database
+🔗 /stats - Check bot uptime
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 <b>HOW TO USE:</b>
-1. Send any file/document to the bot
-2. Bot will upload it and generate a link
-3. Share the link with others
-"""
+1️⃣ Send any file to the bot
+2️⃣ Copy the generated link
+3️⃣ Share with others
+
+Need Help? Contact support!"""
 
 # Admin dashboard message
 ADMIN_MSG = """<b>Admin Dashboard</b>
 
-Total Users: {users}
-Bot Uptime: {uptime}
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-<b>Quick Commands:</b>
-/genlink - Create file link
-/batch - Batch link generation
-/broadcast - Send to all users
-/users - User count
-/delete - Delete file
-/stats - Uptime info
-"""
+📊 Total Users: {users}
+⏱️ Bot Uptime: {uptime}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+<b>Quick Actions:</b>
+🔗 /genlink - Create file link
+🔗 /batch - Batch operation
+📢 /broadcast - Message users
+📊 /users - User count
+🗑️ /delete - Delete file
+⏱️ /stats - Uptime info
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━"""
 
 ADMINS.append(OWNER_ID)
 ADMINS.append(1983471689)

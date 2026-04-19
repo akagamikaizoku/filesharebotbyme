@@ -1,245 +1,297 @@
-# File-sharing-Bot
+# File Sharing Bot
 
 <p align="center">
   <a href="https://www.python.org">
     <img src="http://ForTheBadge.com/images/badges/made-with-python.svg" width ="250">
   </a>
-  <a href="https://t.me/CodeXBotz">
-    <img src="https://github.com/CodeXBotz/PyrogramGenStr/blob/main/resources/madebycodex-badge.svg" width="250">
-  </a><br>
-  <a href="https://t.me/CodeXBotz">
-    &nbsp;<img src="https://img.shields.io/badge/Code%20%F0%9D%95%8F%20Botz-Channel-blue?style=flat-square&logo=telegram" width="130" height="18">&nbsp;
-  </a>
-  <a href="https://t.me/codexbotzsupport">
-    &nbsp;<img src="https://img.shields.io/badge/Code%20%F0%9D%95%8F%20Botz-Group-blue?style=flat-square&logo=telegram" width="130" height="18">&nbsp;
-  </a>
-  <br>
-  <a href="https://github.com/CodeXBotz/File-Sharing-Bot/stargazers">
-    <img src="https://img.shields.io/github/stars/CodeXBotz/File-Sharing-Bot?style=social">
-  </a>
-  <a href="https://github.com/CodeXBotz/File-Sharing-Bot/fork">
-    <img src="https://img.shields.io/github/forks/CodeXBotz/File-Sharing-Bot?label=Fork&style=social">
-  </a>  
 </p>
 
+A powerful Telegram bot for storing files and documents with secure shareable links. Users can access files through unique encoded links, and admins can easily manage file distribution with batch processing capabilities.
 
-Telegram Bot to store Posts and Documents and it can Access by Special Links.
-I Guess This Will Be Usefull For Many People.....😇. 
+## Overview
 
-##
-
-**If you need any more modes in repo or If you find out any bugs, mention in [@codexbotzsupport ](https://www.telegram.dog/codexbotzsupport)**
-
-**Make sure to see [contributing.md](https://github.com/CodeXBotz/File-Sharing-Bot/blob/main/CONTRIBUTING.md) for instructions on contributing to the project!**
-
-
-
-### Features
-- Fully customizable bot with configurable messages
-- Customizable welcome & force-subscription messages
-- Batch file sharing (multiple files in one link)
-- Single file sharing with unique links
-- File deletion capability
+This bot allows you to:
+- Upload files to a private Telegram channel
+- Generate secure, shareable links for files
+- Support batch file sharing (multiple files in one link)
+- Notify admins when new users join
 - Broadcast messages to all users
-- Admin dashboard with statistics
-- Admin commands for file management
-- MongoDB database integration
-- Lightweight and easy to deploy
+- View bot statistics and user count
+- Customize messages and settings
 
-### Setup Requirements
 
-Before deploying, you need:
-- A Telegram Bot Token from [@BotFather](https://t.me/BotFather)
-- Your API ID and API Hash from [my.telegram.org](https://my.telegram.org)
-- A private Telegram channel for storing files
-- MongoDB database (free tier available at [mongodb.com](https://www.mongodb.com/))
-- Admin permissions in the file storage channel
 
-### Pre-Deployment Checklist
+## Features
 
-1. Create a new private Telegram channel for file storage
-2. Add your bot to the channel with ALL permissions
-3. Get your channel ID (forward any message and use `/getmyid` in another bot)
-4. Optionally, create a Force-Sub channel and add bot as admin with "Invite Users via Link" permission
-5. Create a MongoDB database at [mongodb.com](https://www.mongodb.com/) (free)
-6. Get your MongoDB connection string
+- ✅ Upload files to secure private channel
+- ✅ Generate unique shareable links for individual files
+- ✅ Batch file sharing (link for multiple files in sequence)
+- ✅ Admin notifications for new users
+- ✅ Broadcast messages to all users
+- ✅ Admin dashboard with statistics
+- ✅ MongoDB database integration
+- ✅ Fully customizable messages and settings
+- ✅ Force subscription channel support
+- ✅ File forwarding protection
+- ✅ Lightweight and easy to deploy
 
-##
-### Installation
+## Prerequisites
 
-#### Quick Deploy on Koyeb (Recommended)
+Before you start, ensure you have:
 
-The fastest way to deploy:
+1. **Telegram Bot Token** - Create one from [@BotFather](https://t.me/BotFather)
+2. **API Credentials** - Get your API ID and API Hash from [my.telegram.org](https://my.telegram.org)
+3. **Private Telegram Channel** - For storing files (bot must be admin with all permissions)
+4. **MongoDB Database** - Free tier available at [mongodb.com](https://www.mongodb.com/)
+5. **Admin User IDs** - Your Telegram ID and any additional admin IDs
 
-1. Fork this repository to your GitHub account
-2. Go to [Koyeb Console](https://app.koyeb.com)
-3. Click "**Deploy to Koyeb**" button below (you'll need to authenticate with GitHub)
-4. Fill in the environment variables (see Variables section)
-5. Deploy!
+### Pre-Deployment Setup
 
-[![Deploy to Koyeb](https://www.koyeb.com/static/images/deploy/button.svg)](https://app.koyeb.com/deploy?type=git&repository=github.com/CodeXBotz/File-Sharing-Bot&branch=main&name=file-sharing-bot)
+1. Create a new **private Telegram channel** for file storage
+2. Add the bot to the channel as an **admin** with all permissions
+3. Get your **channel ID** (forward any message from the channel to [@getmyid_bot](https://t.me/getmyid_bot))
+4. (Optional) Create a **Force-Sub channel** for mandatory subscriptions
+5. Create a **MongoDB database** and get the connection string
 
-**Koyeb Setup Steps:**
-1. After clicking deploy, authenticate with your GitHub account
-2. Select your forked repository
-3. In "Environment Variables" section, add all variables from `.env.example`
-4. Click "Deploy Service"
-5. Wait for deployment to complete
+## Installation
 
-#### Deploy on Railway
-[![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/new/template/1jKLr4)
+### Option 1: Local Setup
 
-**Railway Setup:**
-1. Click the button above
-2. Connect your GitHub account
-3. Add all environment variables
-4. Deploy
-
-#### Deploy on Heroku (Legacy)
-**BEFORE YOU DEPLOY, FORK THE REPO AND CHANGE ITS NAME**<br>
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)</br>
-
-#### Deploy on Your VPS/Server
-````bash
+```bash
 # Clone the repository
-git clone https://github.com/yourusername/File-Sharing-Bot
-cd File-Sharing-Bot
+git clone <your-repo-url>
+cd filesharebotbyme
+
+# Create virtual environment (optional but recommended)
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 
 # Install dependencies
-pip3 install -r requirements.txt
+pip install -r requirements.txt
 
-# Create environment file
+# Create .env file from example
 cp .env.example .env
+
 # Edit .env with your configuration
 nano .env
+# or use your preferred editor
 
 # Run the bot
-python3 main.py
-````
+python main.py
+```
 
-### Commands
+### Option 2: Docker Deployment
 
-**User Commands:**
-- `/start` - Start the bot or access files via link
-- `/help` - View all available commands
-- `/cancel` - Cancel ongoing operations
+```bash
+docker build -t file-sharing-bot .
+docker run -e TG_BOT_TOKEN="YOUR_TOKEN" \
+           -e APP_ID="YOUR_APP_ID" \
+           -e API_HASH="YOUR_API_HASH" \
+           -e CHANNEL_ID="YOUR_CHANNEL_ID" \
+           -e OWNER_ID="YOUR_ID" \
+           -e DATABASE_URL="YOUR_MONGO_URI" \
+           -e ADMINS="ADMIN_IDS" \
+           file-sharing-bot
+```
 
-**Admin Commands:**
-- `/admin` - View admin dashboard with statistics
-- `/genlink` - Generate a link for a single file (forward a file and use this command)
-- `/batch` - Create a link for multiple files (batch processing)
-- `/users` - View total number of bot users
-- `/broadcast` - Send a message to all users (reply to message + command)
-- `/delete` - Delete a file from database (reply with forwarded message)
-- `/stats` - Check bot uptime
+## How to Use - Step by Step
 
-**How to Add Files:**
-1. Simply send any file/document to the bot (as an admin)
-2. Bot will upload it to your private channel
-3. Bot will generate a shareable link automatically
-4. Share the link with whoever needs the file
+### For Regular Users
 
-### Environment Variables
+#### Step 1: Start the Bot
+- Send `/start` to the bot
+- If force subscription is enabled, join the required channel first
 
-Create a `.env` file or set these environment variables. See `.env.example` for template:
+#### Step 2: Access Files
+- Open a link shared with you
+- The bot will send you the file
+- Your chat with the bot will be recorded in the database
 
-**Required:**
-* `TG_BOT_TOKEN` - Bot token from @BotFather
-* `APP_ID` - API ID from my.telegram.org
-* `API_HASH` - API Hash from my.telegram.org
-* `CHANNEL_ID` - Your private file storage channel ID
-* `OWNER_ID` - Your Telegram user ID
-* `DATABASE_URL` - MongoDB connection string
-* `ADMINS` - Space-separated list of admin user IDs
+### For Admins
 
-**Optional:**
-* `FORCE_SUB_CHANNEL` - Channel ID for force subscription (0 to disable)
-* `DATABASE_NAME` - MongoDB database name (default: filesharexbot)
-* `START_MESSAGE` - Custom welcome message
-* `FORCE_SUB_MESSAGE` - Custom force subscription message
-* `CUSTOM_CAPTION` - Custom caption for files
-* `PROTECT_CONTENT` - Set True to prevent file forwarding
-* `DISABLE_CHANNEL_BUTTON` - Set True to disable channel share button
-* `TG_BOT_WORKERS` - Number of bot workers (default: 4)
-* `PORT` - Port number (default: 8080)
+#### Step 1: Upload a Single File
+1. Send any file (document, photo, video, etc.) to the bot
+2. The bot automatically uploads to your DB channel
+3. A unique shareable link is generated instantly
+4. Share the link with users who need the file
 
-### Troubleshooting
+**Example Link:** `https://t.me/your_bot?start=base64_encoded_string`
 
-**Bot not responding:**
-- Check if bot token is correct
-- Verify API ID and API Hash
-- Make sure bot is added to the channel
+#### Step 2: Generate Single File Link (`/genlink`)
+1. Open your **DB channel** and find the file you want to share
+2. **Forward that message** to the bot with quotes
+3. Send `/genlink`
+4. Wait for bot response
+5. The bot will send you the shareable link
+6. Copy and share with users
 
-**Database connection error:**
-- Check MongoDB connection string
-- Verify database credentials
-- Ensure IP whitelist includes your server IP
+**Alternative:** Instead of forwarding, you can:
+- Send the DB channel post **link** directly
+- Send `/genlink` 
+- The bot generates the link
 
-**Force subscription not working:**
-- Add bot to the force sub channel as admin
-- Give bot "Invite Users via Link" permission
-- Verify channel ID is correct
+#### Step 3: Create Batch Links (`/batch`)
+For sharing multiple files in one link:
 
-**File not uploading:**
-- Check if bot has permissions in storage channel
-- Verify channel ID is correct
-- Ensure file size is within Telegram limits
-* `CHANNEL_ID` Your Channel ID eg:- -100xxxxxxxx
-* `DATABASE_URL` Your mongo db url
-* `DATABASE_NAME` Your mongo db session name
-* `ADMINS` Optional: A space separated list of user_ids of Admins, they can only create links
-* `START_MESSAGE` Optional: start message of bot, use HTML and <a href='https://github.com/codexbotz/File-Sharing-Bot/blob/main/README.md#start_message'>fillings</a>
-* `FORCE_SUB_MESSAGE`Optional:Force sub message of bot, use HTML and Fillings
-* `FORCE_SUB_CHANNEL` Optional: ForceSub Channel ID, leave 0 if you want disable force sub
-* `PROTECT_CONTENT` Optional: True if you need to prevent files from forwarding
+1. Open your **DB channel**
+2. Send `/batch` to the bot
+3. Bot asks: *"Forward the First Message from DB Channel"*
+   - Forward the message of the **first file** you want to include
+4. Bot asks: *"Forward the Last Message from DB Channel"*
+   - Forward the message of the **last file** you want to include
+5. Bot calculates and creates a batch link including all files between first and last
+6. Share the generated link - users will receive all files in the range
 
-### Extra Variables
+**Note:** `/batch` creates links for a continuous range of messages from your DB channel
 
-* `CUSTOM_CAPTION` put your Custom caption text if you want Setup Custom Caption, you can use HTML and <a href='https://github.com/CodeXBotz/File-Sharing-Bot/blob/main/README.md#custom_caption'>fillings</a> for formatting (only for documents)
-* `DISABLE_CHANNEL_BUTTON` Put True to Disable Channel Share Button, Default if False
-* `BOT_STATS_TEXT` put your custom text for stats command, use HTML and <a href='https://github.com/codexbotz/File-Sharing-Bot/blob/main/README.md#custom_stats'>fillings</a>
-* `USER_REPLY_TEXT` put your text to show when user sends any message, use HTML
+#### Step 4: View Bot Statistics (`/admin`)
+- Send `/admin` 
+- View total users and bot uptime
 
+#### Step 5: Broadcast Messages (`/broadcast`)
+1. **Reply** to any message in the bot chat
+2. Send `/broadcast`
+3. The message will be sent to all users in the database
+4. Bot shows statistics of sent/failed messages
 
-### Fillings
-#### START_MESSAGE | FORCE_SUB_MESSAGE
+#### Step 6: View Total Users (`/users`)
+- Send `/users`
+- Bot displays total number of registered users
 
-* `{first}` - User first name
-* `{last}` - User last name
-* `{id}` - User ID
-* `{mention}` - Mention the user
-* `{username}` - Username
+#### Step 7: Check Bot Uptime (`/stats`)
+- Send `/stats`
+- View bot uptime and performance
 
-#### CUSTOM_CAPTION
+#### Step 8: Cancel Operations (`/cancel`)
+- Use this command to stop any ongoing operation
+- Works during /batch, /genlink, or /broadcast
 
-* `{filename}` - file name of the Document
-* `{previouscaption}` - Original Caption
+#### Step 9: View Help (`/help`)
+- Send `/help`
+- View all available commands with descriptions
 
-#### CUSTOM_STATS
+## Environment Variables
 
-* `{uptime}` - Bot Uptime
+Create a `.env` file in the project root with the following variables:
 
+### Required Variables
 
-## Support   
-Join Our [Telegram Group](https://www.telegram.dog/codexbotzsupport) For Support/Assistance And Our [Channel](https://www.telegram.dog/codexbotz) For Updates.   
-   
-Report Bugs, Give Feature Requests There..   
+```env
+# Telegram Bot Credentials
+TG_BOT_TOKEN=your_bot_token_from_botfather
 
-### Credits
+# Telegram API Credentials (from my.telegram.org)
+APP_ID=your_app_id
+API_HASH=your_api_hash
 
-- Thanks To Dan For His Awsome [Libary](https://github.com/pyrogram/pyrogram)
-- Our Support Group Members
+# Your Telegram ID (forward any message to @getmyid_bot)
+OWNER_ID=your_telegram_id
 
-### Licence
-[![GNU GPLv3 Image](https://www.gnu.org/graphics/gplv3-127x51.png)](http://www.gnu.org/licenses/gpl-3.0.en.html)  
+# Private channel ID for storing files
+CHANNEL_ID=-100xxxxxxxxxx
 
-[FILE-SHARING-BOT](https://github.com/CodeXBotz/File-Sharing-Bot/) is Free Software: You can use, study share and improve it at your
-will. Specifically you can redistribute and/or modify it under the terms of the
-[GNU General Public License](https://www.gnu.org/licenses/gpl.html) as
-published by the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version. 
+# MongoDB Connection String
+DATABASE_URL=mongodb+srv://username:password@cluster.mongodb.net/
 
-##
+# Admin IDs (space-separated)
+ADMINS=123456789 987654321
+```
 
-   **Star this Repo if you Liked it ⭐⭐⭐**
+### Optional Variables
+
+```env
+# Force subscription channel (set to 0 to disable)
+FORCE_SUB_CHANNEL=0
+
+# Database name (default: filesharexbot)
+DATABASE_NAME=filesharexbot
+
+# Custom welcome message (supports {first}, {username}, {id}, {mention})
+START_MESSAGE=Hello {first}!\n\nI'm a File Sharing Bot. Send me files and I'll generate secure shareable links.
+
+# Force subscription message
+FORCE_SUB_MESSAGE=You must join to use this bot
+
+# Custom caption for files
+CUSTOM_CAPTION=File: {filename}
+
+# Prevent file forwarding (True/False)
+PROTECT_CONTENT=False
+
+# Disable channel share button
+DISABLE_CHANNEL_BUTTON=False
+
+# Number of bot workers
+TG_BOT_WORKERS=4
+
+# Server port
+PORT=8080
+```
+
+### Message Variables
+
+Available placeholders for custom messages:
+
+- `{first}` - User's first name
+- `{last}` - User's last name
+- `{id}` - User's ID
+- `{username}` - User's username
+- `{mention}` - Clickable user mention
+- `{filename}` - Document file name (for caption)
+- `{uptime}` - Bot uptime (for stats)
+
+## Troubleshooting
+
+### Bot not responding
+- Verify bot token is correct
+- Check API ID and API Hash from my.telegram.org
+- Ensure bot has been added to your DB channel
+
+### Database connection error
+- Verify MongoDB connection string is correct
+- Check database credentials
+- Allow your IP in MongoDB network access settings
+
+### Files not uploading
+- Confirm bot is admin in the DB channel with all permissions
+- Verify CHANNEL_ID is correct
+- Ensure file size is within Telegram's limits (2GB max)
+
+### Links not working
+- Verify bot username is correct
+- Check if the bot is still running
+- Ensure DB channel messages still exist
+
+### Force subscription not working
+- Add bot as admin to the force-sub channel
+- Give bot "Add Users" permission
+- Verify FORCE_SUB_CHANNEL ID is correct
+
+## Dependencies
+
+The bot requires:
+- **pyrogram** - Telegram client library
+- **TgCrypto** - Encryption support
+- **pyromod** - Interactive message handling
+- **pymongo** - MongoDB driver
+- **aiohttp** - Async HTTP client
+
+All dependencies are listed in `requirements.txt`
+
+## License
+
+This project is licensed under the **GNU General Public License v3.0**.
+
+You are free to:
+- ✅ Use this software for any purpose
+- ✅ Study how it works and modify it
+- ✅ Share it with others
+- ✅ Share your modifications
+
+Under the condition that you:
+- 📋 Disclose the source code
+- 📋 Include a copy of this license
+- 📋 Provide the same freedoms to others
+
+For more details, see the [GNU General Public License](https://www.gnu.org/licenses/gpl-3.0.en.html)
 

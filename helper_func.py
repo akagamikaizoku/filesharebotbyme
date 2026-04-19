@@ -3,6 +3,7 @@
 import base64
 import re
 import asyncio
+from datetime import datetime
 from pyrogram import filters
 from pyrogram.enums import ChatMemberStatus
 from config import FORCE_SUB_CHANNEL, ADMINS
@@ -111,3 +112,34 @@ def get_readable_time(seconds: int) -> str:
 
 
 subscribed = filters.create(is_subscribed)
+
+async def notify_admin_new_user(client, user_id: int, user_name: str, user_first_name: str):
+    """
+    Notify all admins about a new user joining the bot
+    
+    Args:
+        client: Pyrogram bot client
+        user_id: Telegram ID of the new user
+        user_name: Username of the new user
+        user_first_name: First name of the new user
+    """
+    try:
+        for admin in ADMINS:
+            try:
+                notification_text = (
+                    f"🆕 <b>New User Joined!</b>\n\n"
+                    f"<b>User ID:</b> <code>{user_id}</code>\n"
+                    f"<b>First Name:</b> {user_first_name}\n"
+                    f"<b>Username:</b> @{user_name if user_name else 'N/A'}\n"
+                    f"<b>Joined At:</b> <code>{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}</code>"
+                )
+                await client.send_message(
+                    chat_id=admin,
+                    text=notification_text,
+                    parse_mode="html"
+                )
+            except Exception as e:
+                # Log the error but don't stop execution
+                continue
+    except Exception as e:
+        pass

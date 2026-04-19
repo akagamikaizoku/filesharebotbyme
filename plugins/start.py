@@ -13,7 +13,7 @@ from datetime import datetime
 
 from bot import Bot
 from config import ADMINS, FORCE_MSG, START_MSG, CUSTOM_CAPTION, DISABLE_CHANNEL_BUTTON, PROTECT_CONTENT, HELP_MSG, ADMIN_MSG
-from helper_func import subscribed, encode, decode, get_messages, get_readable_time
+from helper_func import subscribed, encode, decode, get_messages, get_readable_time, notify_admin_new_user
 from database.database import add_user, del_user, full_userbase, present_user
 
 
@@ -25,6 +25,10 @@ async def start_command(client: Client, message: Message):
     if not await present_user(id):
         try:
             await add_user(id)
+            # Notify admins about the new user
+            user_name = message.from_user.username or ""
+            user_first_name = message.from_user.first_name or "User"
+            await notify_admin_new_user(client, id, user_name, user_first_name)
         except:
             pass
     text = message.text

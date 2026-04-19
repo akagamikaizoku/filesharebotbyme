@@ -21,7 +21,7 @@ async def present_user(user_id : int):
 
 async def add_user(user_id: int):
     user_data.insert_one({'_id': user_id})
-    return
+    return True
 
 async def full_userbase():
     user_docs = user_data.find()
